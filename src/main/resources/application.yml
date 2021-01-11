@@ -1,14 +1,12 @@
 spring:
   application:
     name: answer
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 139.155.86.141:8848
 
 server:
-  port: 8080
-
+  port: 7001
+  ssl:
+    key-store: classpath:zyj-lj.icu.jks
+    key-store-type: JKS
 
 
 
