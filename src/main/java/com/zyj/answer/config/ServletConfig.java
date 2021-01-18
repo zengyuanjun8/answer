@@ -12,13 +12,22 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ServletConfig {
     @Bean
-    public ServletWebServerFactory servletContainer() {
+    public ServletWebServerFactory getHttpTomcat() {
+        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+        connector.setPort(8001);
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
+        tomcat.addAdditionalTomcatConnectors(connector);
+        return tomcat;
+    }
+
+//    @Bean
+    private ServletWebServerFactory getHttp2HttpsTomcat() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         connector.setScheme("http");
         connector.setPort(8001);
         connector.setSecure(false);
         connector.setRedirectPort(7001);
-        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory(){
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
             @Override
             protected void postProcessContext(Context context) {
                 // TODO Auto-generated method stub
